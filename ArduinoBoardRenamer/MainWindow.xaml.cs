@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace ArduinoBoardRenamer
     public partial class MainWindow : Window
     {
         private string _restoreBoards;
+        private bool _renamed;
 
         public MainWindow()
         {
@@ -56,6 +58,7 @@ namespace ArduinoBoardRenamer
                 btnRestore.IsEnabled = true;
                 txtBoard.IsEnabled = false;
                 txtTempName.IsEnabled = false;
+                _renamed = true;
                 txtStatus.Text = $"'{txtBoard.Text}' renamed to '{txtTempName.Text}'!\nNow flash your program to the board";
             }
             catch (UnauthorizedAccessException)
@@ -71,7 +74,14 @@ namespace ArduinoBoardRenamer
             btnRestore.IsEnabled = false;
             txtTempName.IsEnabled = true;
             txtBoard.IsEnabled = true;
+            _renamed = false;
             txtStatus.Text = $"'{txtBoard.Text}' restored!";
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (!_renamed) return;
+            File.WriteAllText(txtPath.Text, _restoreBoards);
         }
     }
 }
