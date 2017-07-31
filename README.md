@@ -1,5 +1,5 @@
 # ArduinoBoardRenamer
-A very simple program to temporaily change the name of an Arduino board i the boards.txt file
+A very simple program to temporarily change the name of an Arduino board in the boards.txt file, and thereby changing the usb device name.
 
 ### Usage
 Open the program. Admin rights might be required to write to the boards.txt file
