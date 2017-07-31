@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,42 +25,56 @@ namespace ArduinoBoardRenamer
     {
         private string _restoreBoards;
         private bool _renamed;
+        private List<Tuple<string, string>> _boards;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-
+        private IEnumerable<Tuple<string, string>> GetBoards()
+        {
+            var boards = Regex.Matches(_restoreBoards, "([\\w]+).build.usb_product=\"([^\"]+)\"");
+            foreach (Match board in boards)
+            {
+                yield return new Tuple<string, string>(board.Groups[2].Value, board.Groups[1].Value);
+            }
+        }
 
         private void Load(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(txtPath.Text)) return;
             _restoreBoards = File.ReadAllText(txtPath.Text);
+            _boards = GetBoards().ToList();
+            cboxBoard.ItemsSource = _boards.Select(b => $"{b.Item1} ({b.Item2})");
+            cboxBoard.SelectedIndex = 5;
             btnRename.IsEnabled = true;
             btnLoad.IsEnabled = false;
             txtPath.IsEnabled = false;
+            cboxBoard.IsEnabled = true;
+            txtTempName.IsEnabled = true;
             txtStatus.Text = "Loaded!";
         }
 
         private void Rename(object sender, RoutedEventArgs e)
         {
-            var replace = $"micro.build.usb_product=\"{txtBoard.Text}\"";
+            var board = _boards[cboxBoard.SelectedIndex];
+            var replace = $"{board.Item2}.build.usb_product=\"{board.Item1}\"";
             if (!_restoreBoards.Contains(replace))
             {
-                txtStatus.Text = $"Could not locate '{txtBoard.Text}' in '{txtPath.Text}'";
+                txtStatus.Text = $"Could not locate '{board}' in '{txtPath.Text}'";
                 return;
             }
-            var moddedBoards = _restoreBoards.Replace(replace, $"micro.build.usb_product=\"{txtTempName.Text}\"");
+            var moddedBoards = _restoreBoards.Replace(replace, $"{board.Item2}.build.usb_product=\"{txtTempName.Text}\"");
             try
             {
                 File.WriteAllText(txtPath.Text, moddedBoards);
                 btnRename.IsEnabled = false;
                 btnRestore.IsEnabled = true;
-                txtBoard.IsEnabled = false;
+                cboxBoard.IsEnabled = false;
                 txtTempName.IsEnabled = false;
                 _renamed = true;
-                txtStatus.Text = $"'{txtBoard.Text}' renamed to '{txtTempName.Text}'!\nNow flash your program to the board";
+                txtStatus.Text = $"'{board.Item1}' renamed to '{txtTempName.Text}'!\nNow flash your program to the board";
             }
             catch (UnauthorizedAccessException)
             {
@@ -73,9 +88,9 @@ namespace ArduinoBoardRenamer
             btnRename.IsEnabled = true;
             btnRestore.IsEnabled = false;
             txtTempName.IsEnabled = true;
-            txtBoard.IsEnabled = true;
+            cboxBoard.IsEnabled = true;
             _renamed = false;
-            txtStatus.Text = $"'{txtBoard.Text}' restored!";
+            txtStatus.Text = $"'{_boards[cboxBoard.SelectedIndex].Item1}' restored!";
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
