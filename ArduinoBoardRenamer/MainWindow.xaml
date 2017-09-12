@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ArduinoBoardRenamer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="197.727" Width="331.061" Closing="Window_Closing">
+        Title="Arduino Board Renamer" Height="178.285" Width="312.86" Closing="Window_Closing">
     <Grid>
-        <TextBox x:Name="txtPath" HorizontalAlignment="Left" Height="23" Margin="19,20,0,0" Text="C:\Program Files (x86)\Arduino\hardware\arduino\avr\boards.txt" VerticalAlignment="Top" Width="200"/>
-        <Button x:Name="btnLoad" Content="Load" HorizontalAlignment="Left" Margin="224,20,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="Load"/>
-        <TextBox x:Name="txtTempName" HorizontalAlignment="Left" Height="23" Margin="19,76,0,0" Text="My Arduino Project" VerticalAlignment="Top" Width="200" IsEnabled="False"/>
-        <Button x:Name="btnRename" Content="Rename" HorizontalAlignment="Left" Margin="224,48,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="Rename" IsEnabled="False"/>
-        <Button x:Name="btnRestore" Content="Restore" HorizontalAlignment="Left" Margin="224,76,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="Restore" IsEnabled="False"/>
-        <TextBlock x:Name="txtStatus" HorizontalAlignment="Left" Margin="19,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Height="52"/>
-        <ComboBox x:Name="cboxBoard" HorizontalAlignment="Left" Margin="19,48,0,0" VerticalAlignment="Top" Width="200" Height="23" IsEnabled="False"/>
+        <TextBox x:Name="txtPath" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" Text="C:\Program Files (x86)\Arduino\hardware\arduino\avr\boards.txt" VerticalAlignment="Top" Width="200"/>
+        <Button x:Name="btnLoad" Content="Load" HorizontalAlignment="Left" Margin="215,10,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="Load"/>
+        <TextBox x:Name="txtTempName" HorizontalAlignment="Left" Height="23" Margin="10,66,0,0" Text="My Arduino Project" VerticalAlignment="Top" Width="200" IsEnabled="False"/>
+        <Button x:Name="btnRename" Content="Rename" HorizontalAlignment="Left" Margin="215,38,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="Rename" IsEnabled="False"/>
+        <Button x:Name="btnRestore" Content="Restore" HorizontalAlignment="Left" Margin="215,66,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="Restore" IsEnabled="False"/>
+        <TextBlock x:Name="txtStatus" HorizontalAlignment="Left" Margin="10,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Height="52"/>
+        <ComboBox x:Name="cboxBoard" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="200" Height="23" IsEnabled="False"/>
 
     </Grid>
 </Window>

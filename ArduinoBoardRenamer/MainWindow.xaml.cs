@@ -74,7 +74,7 @@ namespace ArduinoBoardRenamer
                 cboxBoard.IsEnabled = false;
                 txtTempName.IsEnabled = false;
                 _renamed = true;
-                txtStatus.Text = $"'{board.Item1}' renamed to '{txtTempName.Text}'!\nNow flash your program to the board";
+                txtStatus.Text = $"'{board.Item1}' renamed to '{txtTempName.Text}'\nNow flash your program to the board";
             }
             catch (UnauthorizedAccessException)
             {
